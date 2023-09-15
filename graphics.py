@@ -87,7 +87,7 @@ def graphPressureVsAt(all_main_pressures, all_minor_pressures, minor_heights):
 
     for i, minor_height in enumerate(minor_heights):
         pressures.append(np.mean([x + y for x, y in zip(all_main_pressures[i], all_minor_pressures[i])]))  # TODO: luego del estado estacionario
-        areas_inverse.append(1 / constants["main_height"] * constants["main_width"] + minor_height * constants["minor_width"])
+        areas_inverse.append(1 / (constants["main_height"] * constants["main_width"] + minor_height * constants["minor_width"]))
 
     plt.figure(figsize=(10, 6))
     plt.plot(areas_inverse, pressures, marker='o', linestyle='-')
