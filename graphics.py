@@ -116,7 +116,7 @@ def graph_pressure_vs_At(all_main_pressures, all_minor_pressures, minor_heights)
     initial_guess = np.array([0.5, b, c])
     result = minimize(lambda coeffs: squared_residuals(areas_inverse, pressures, *coeffs), initial_guess, bounds=bounds)
     print(result)
-    fitted_pressures = f(areas_inverse, result.x[0], result.x[1], result.x[2])
+    fitted_pressures = f(np.arange(areas_inverse[0], areas_inverse[-1], step=1), result.x[0], result.x[1], result.x[2])
     print(fitted_pressures)
 
     # Grafica los datos originales y la curva de ajuste con el valor óptimo de c
