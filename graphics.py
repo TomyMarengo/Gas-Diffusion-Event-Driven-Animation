@@ -104,25 +104,23 @@ def graph_pressure_vs_At(all_main_pressures, all_minor_pressures, minor_heights)
 
     b = areas_inverse[-1]
     c = pressures[0]
-    print("b:" + str(b))
-    print("c:" + str(c))
+
     bounds = [(0.1, 0.9), (b - b*0.1, b + b*0.1)]
     if c >= 0:
         bounds.append((c - c*0.2, c + c*0.2))
     else:
         bounds.append((c + c*0.2, c - c*0.2))
-    print(bounds)
 
     initial_guess = np.array([0.5, b, c])
     result = minimize(lambda coeffs: squared_residuals(areas_inverse, pressures, *coeffs), initial_guess, bounds=bounds)
-    print(result)
-    fitted_pressures = f(np.arange(areas_inverse[0], areas_inverse[-1], step=1), result.x[0], result.x[1], result.x[2])
-    print(fitted_pressures)
+
+    fitted_xs = np.arange(areas_inverse[0], areas_inverse[-1], step=1)
+    fitted_pressures = f(fitted_xs, result.x[0], result.x[1], result.x[2])
 
     # Grafica los datos originales y la curva de ajuste con el valor óptimo de c
     plt.figure(figsize=(10, 6))
     plt.plot(areas_inverse, pressures, 'ro', label='Datos Originales')
-    plt.plot(areas_inverse, fitted_pressures, 'b-', label='Curva de Ajuste Exponencial (c óptimo)')
+    plt.plot(fitted_xs, fitted_pressures, 'b-', label='Curva de Ajuste Exponencial (c óptimo)')
     plt.xlabel('1/Área (1/m)')
     plt.ylabel('Presión (N/m)')
     plt.grid()
