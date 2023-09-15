@@ -13,10 +13,10 @@ all_minor_pressures = []
 for minor_height in minor_heights:
     # animate(minor_height, 100)
 
-    times, main_pressures, minor_pressures = graphics.calculate_pressure(minor_height=minor_height, reps=reps, deltaT=0.5)
-    all_main_pressures.append(main_pressures)
-    all_minor_pressures.append(minor_pressures)
+    times, avg_main_pressures, avg_minor_pressures, avg_collision_amount = graphics.process_system(minor_height=minor_height, reps=reps, delta_t=1.8)
+    all_main_pressures.append(avg_main_pressures)
+    all_minor_pressures.append(avg_minor_pressures)
 
-    # graphics.graph_pressure_vs_time(minor_height, times, main_pressures, minor_pressures)
+    # graphics.graph_pressure_vs_time(minor_height, times, avg_main_pressures, avg_minor_pressures)
 
 graphics.graph_pressure_vs_At(all_main_pressures, all_minor_pressures, minor_heights)
