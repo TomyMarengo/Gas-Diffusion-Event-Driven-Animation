@@ -9,7 +9,6 @@ ax2d = None
 minor_height = 0
 lines = []
 n = constants["n"]
-max_step = constants["max_step"]
 radius = constants["radius"]
 mass = constants["mass"]
 init_velocity = constants["init_velocity"]
@@ -87,16 +86,16 @@ def update(frame, skip):
     if firstObjectColliding != -1:
         ax2d.scatter(particles[int(firstObjectColliding), 0], particles[int(firstObjectColliding), 1], s=75, c='r')
 
-    ax2d.set_xticks([0, main_width, main_width + minor_width])
-    ax2d.set_yticks(
-        [-main_height, -(main_height - minor_height) / 2, -(main_height - minor_height) / 2 - minor_height, 0])
+    plt.xticks([])
+    plt.yticks([])
 
-    ax2d.set_title('Step: ' + str(step) + ' Time: ' + "{:.3f}".format(time) + 's' + '\nColliding particles: ' + str(
-        firstObjectColliding) + ' and ' + str(secondObjectColliding))
+    ax2d.set_xticks([])
+    ax2d.set_yticks([])
+
     return [img_plot]
 
 
-def animate(height, skip):
+def animate(height, skip=100):
     global img_plot, ax2d, minor_height, lines
     fig, ax2d = plt.subplots(figsize=(10, 10))
     ax2d.set_aspect('equal', adjustable='box')
@@ -108,6 +107,7 @@ def animate(height, skip):
     with open('outputs/output_' + file_suffix + '.txt', 'r') as file:
         lines = file.readlines()
 
+    max_step = int(len(lines)/(constants["n"] + 4))
     cant_frames = int(max_step/skip)
 
     ani = FuncAnimation(fig, frames=cant_frames, func=update, fargs=(skip,), interval=100)
